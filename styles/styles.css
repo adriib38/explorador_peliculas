@@ -1,0 +1,152 @@
+
+:root {
+    --rosa: #F72C25;
+    --morado: #2D1E2F;
+    --verde: #246A73;
+    --marron: #B96D40;
+}
+
+@font-face {
+    font-family: Blockletter;
+    src: url("/Blockletter.otf") format("opentype");
+}
+
+body { background-color: #000!important;}
+h1, h2 {
+    color: white!important; font-weight: 600!important; font-family: arial;
+}
+
+.content {
+    margin-left: 30px;
+}
+
+p {
+    color: white;
+}
+
+.title{ 
+    font-size: 4rem;
+    font-family: Blockletter;
+    font-weight: 600;
+    text-decoration: none;  
+    color: var(--verde)!important;
+    margin: 0;
+    text-shadow: 2px 2px 5px var(--rosa);
+}
+
+.form-group > input[type=text] {
+    font-size: 1.2rem;
+    width: 200px;
+}
+
+nav a {
+    color: var(--rosa);
+    
+    border-radius: 3px;
+    font-weight: 700;
+}
+nav {
+    background-color: #000;
+}
+
+
+.card-genero-info {
+    margin: 20px;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.card .caratula {
+    width: 200px;
+}
+.card-genero-title {
+    font-size: 3rem;
+}
+.card-genero-desc {
+    font-size: 1.3rem;
+} 
+
+
+
+.btn{
+    display: flex;
+    margin-top: 40px;
+    padding: 40px;
+}
+
+.populares,
+.results {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.genero {
+    flex-direction: row;
+    display: flex;
+    overflow-x: scroll;
+}
+.genero > .card {
+    width: 200px;
+    min-width: 200px;
+}
+
+.card {
+    width: 200px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.card-body > p{
+    color: black;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transition: all 0.4s;
+}
+
+/* CARD */
+
+.mrg{
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.menu {
+    background-color: rgba(255, 255, 255, 0.60);
+    padding: 20px;
+    border-radius: 3px;
+    margin-bottom: 103px;
+    margin-left: 40px;
+}
+
+.fa-start {
+    color: yellow;
+}
+
+.pelicula > .caratula {
+    float: left;
+    width: 310px;
+    margin-right: 30px;
+}
+
+.green{  color: green; }
+.yellow{  color: yellow; }
+.red{  color: red; }
+
+.none{ display: none;}
+
+
+@media (min-width: 1000px){
+    
+    
+   
+}
+
+@media (max-width: 1000px){
+    
+}
