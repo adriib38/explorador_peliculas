@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>REDFLIX</title>
+    <title>Netfilms</title>
     <link rel="icon"
         href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/film-frames_1f39e-fe0f.png"
         type="image/x-icon">
@@ -25,49 +25,78 @@
         
             <h2>Peliculas populares esta semana</h2>
             <hr>
-            <div class="populares">
-                <?php
-                    $p = getPeliculasPopulares();
-                    foreach($p as $pelicula){
-                        $img = 'https://image.tmdb.org/t/p/w500'.$pelicula->caratula.'';
-                ?>        
-                    <div class="card">
-                        <img class="caratula" src="<?=$img??'' ?>" alt="<?=$pelicula->titulo??'' ?>">
-                        <div class="card-body">
-                            <h5 class="card-title"><?=$pelicula->titulo??'' ?></h5>
-                            <p><?=$pelicula->genero??'' ?>
-                            <p><?=$pelicula->fecha??'' ?></p>
-                        </div>
-                
-                        <div class="card-body">
-                            <a href="pelicula.php?id=<?=$pelicula->id??'' ?>" class="card-link">Ver más</a>
-                        </div>
+            <div id="peliculas-populares" class="populares">
+            <?php
+                $p = getPopularesEstaSemana();
+                foreach($p ?? [] as $pelicula){
+                    $img = 'https://image.tmdb.org/t/p/w500'.$pelicula->caratula.'';
+            ?>        
+                <div class="card">
+                    <img class="caratula" src="<?=$img??'' ?>" alt="<?=$pelicula->titulo??'' ?>">
+                    <div class="card-body">
+                        <h5 class="card-title"><?=$pelicula->titulo??'' ?></h5>
+                        <p><?=$pelicula->genero??'' ?>
+                        <p><?=$pelicula->fecha??'' ?></p>
                     </div>
-                <?php } ?>
-            </div>
+            
+                    <div class="card-body">
+                        <a href="pelicula.php?id=<?=$pelicula->id??'' ?>" class="card-link">Ver más</a>
+                    </div>
+                </div>
+            <?php } ?>
 
-            <h2>Peliculas mejor valoradas</h2>
+           
+           
             <hr>
-            <div class="populares">
-                <?php
-                    $p = getTopRated();
-                    foreach($p as $pelicula){
-                        $img = 'https://image.tmdb.org/t/p/w500'.$pelicula->caratula.'';
-                ?>        
-                    <div class="card">
-                        <img class="caratula" src="<?=$img??'' ?>" alt="<?=$pelicula->titulo??'' ?>">
-                        <div class="card-body">
-                            <h5 class="card-title"><?=$pelicula->titulo??'' ?></h5>
-                            <p><?=$pelicula->genero??'' ?>
-                            <p><?=$pelicula->fecha??'' ?></p>
-                        </div>
-                
-                        <div class="card-body">
-                            <a href="pelicula.php?id=<?=$pelicula->id??'' ?>" class="card-link">Ver más</a>
-                        </div>
+            <div id="peliculas-populares" class="populares">
+            <h2>Peliculas mejor valoradas</h2>
+            <br>
+            <?php
+                $p = getTopRated();
+                foreach($p ?? [] as $pelicula){
+                    $img = 'https://image.tmdb.org/t/p/w500'.$pelicula->caratula.'';
+            ?>        
+                <div class="card">
+                    <img class="caratula" src="<?=$img??'' ?>" alt="<?=$pelicula->titulo??'' ?>">
+                    <div class="card-body">
+                        <h5 class="card-title"><?=$pelicula->titulo??'' ?></h5>
+                        <p><?=$pelicula->genero??'' ?>
+                        <p><?=$pelicula->fecha??'' ?></p>
                     </div>
-                <?php } ?>
-            </div>
-        </div>
-    </body>
+            
+                    <div class="card-body">
+                        <a href="pelicula.php?id=<?=$pelicula->id??'' ?>" class="card-link">Ver más</a>
+                    </div>
+                </div>
+                
+            <?php } ?>
+
+           
+        
+
+
+        <!-- GENEROS -->
+        <?php
+            $generos = getGeneros();
+            foreach ($generos ?? [] as $clave => $valor) {
+                foreach ($valor ?? [] as $clave => $v) {       
+        ?>
+
+       
+        <?php }  } ?>
+
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+</body>
+
 </html>

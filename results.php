@@ -1,18 +1,19 @@
 <?php
-    include('inc/conexion.inc.php');
-    include('inc/cabecera.inc.php');
+    require_once('inc/conexion.inc.php');
+    require_once('inc/cabecera.inc.php');
+    require_once('inc/Pelicula.inc.php');
 
     if(!empty($_GET)){
         if(!empty($_GET['titulo'])){
             $peliABuscar = $_GET['titulo'];
 
-            $resultados = peticion('https://api.themoviedb.org/3/search/movie?api_key=API_KEY&language=es&query='.$_GET['titulo'].'&page=1&include_adult=true');
+            $resultados = peticion('https://api.themoviedb.org/3/search/movie?api_key=c256f4b9b1e5fd9e15fdb3c7cf116601&language=es&query='.$_GET['titulo'].'&page=1&require_once_adult=true');
             $p = json_decode($resultados, false);
 
             $peliculas = $p->results;
 
             $respuesta = array();
-            foreach($peliculas as $pelicula){
+            foreach($peliculas ?? [] as $pelicula){
                 $generoAux = getGeneroByIdGenero($pelicula->genre_ids[0]);
             
                 $peli = new Pelicula($pelicula->id, $pelicula->title, $generoAux, $pelicula->poster_path, $pelicula->backdrop_path, $pelicula->release_date, $pelicula->adult, $pelicula->overview, $pelicula->vote_average);
@@ -48,7 +49,7 @@
             <h2><?=$genero??'' ?></h2>
             <hr>
             <div class="results">
-                <?php foreach($respuesta as $peli){
+                <?php foreach($respuesta ?? [] as $peli){
                     $img = 'https://image.tmdb.org/t/p/w500'.$peli->caratula.'';
                 ?>
                     <div class="card">

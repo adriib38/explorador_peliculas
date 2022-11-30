@@ -1,35 +1,34 @@
 <?php
 
-    include('inc/Pelicula.inc.php');
-    
+
+    require_once('inc/Pelicula.inc.php');
 
     function peticion($url){
         //TMDB API KEY 
         $apiKey = 'TU-TMDB-API-KEY ';
         $url = str_replace('API_KEY', $apiKey, $url);
 
-        // create curl resource
         $ch = curl_init();
-        // set url
         curl_setopt($ch, CURLOPT_URL, $url);
-        //return the transfer as a string
+        curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        // $output contains the output string
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // For HTTPS
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // For HTTPS
         $output = curl_exec($ch);
-        // close curl resource to free up system resources
-        curl_close($ch);      
-        //print_r($output);
+
+        curl_close($ch);
         return $output;
     }
    
+
     function getPeliculasPopulares(){
         $peliculas = peticion('https://api.themoviedb.org/3/movie/popular?api_key=API_KEY&language=es&page=1');
         $p = json_decode($peliculas, false);
        
         $pelicul = $p->results;
-        
+   
         $respuesta = array();
-        foreach($pelicul as $pelicula){
+        foreach($pelicul ?? [] as $pelicula){
             $generoAux = getGeneroByIdGenero($pelicula->genre_ids[0]);
 
             $fecha = date("d-m-Y", strtotime($pelicula->release_date));
@@ -37,7 +36,7 @@
             $peli = new Pelicula($pelicula->id, $pelicula->title, $generoAux, $pelicula->poster_path, $pelicula->backdrop_path, $fecha, $pelicula->adult, $pelicula->overview, $pelicula->vote_average);
             array_push($respuesta, $peli);
         }
-       
+        
         return $respuesta;
         
     }
@@ -69,6 +68,7 @@
         $peli = new Pelicula($pelicula->id, $pelicula->title, $generoAux, $pelicula->poster_path, $pelicula->backdrop_path, $fecha, $pelicula->adult, $pelicula->overview, $pelicula->vote_average);
         return $peli;
     }
+
    
     function getPeliculasByGenero($genero){
         $generos = getGeneros();
@@ -80,7 +80,7 @@
         $pelicul = $p->results;
         
         $respuesta = array();
-        foreach($pelicul as $pelicula){
+        foreach($pelicul ?? [] as $pelicula){
             $generoAux = getGeneroByIdGenero($pelicula->genre_ids[0]);
             $fecha = date("d-m-Y", strtotime($pelicula->release_date));  
 
@@ -91,35 +91,27 @@
         return $respuesta;
     }
 
-    // GET GENEROS
+ // GET GENEROS
     function getGeneros(){
-        $gemerp = peticion('https://api.themoviedb.org/3/genre/movie/list?api_key=API_KEY&language=es');
-        $r = json_decode($gemerp, false);
-
-        $generos = $r->genres;
-
-        $respuesta = array();
-
-        foreach($generos as $genero){
-            $nombre = $genero->name;
-            $idG = $genero->id;
-            
-            $generoAux = [$idG => $nombre];
-           
-            array_push($respuesta, $generoAux);
-        }
+         $json = file_get_contents('generos.json');
+        $json_data = json_decode($json, true);
      
-        return $respuesta;
+        return $json_data;
     }
     
+    
+    
     function getPopularesEstaSemana(){
-        $respuesta = peticion('https://api.themoviedb.org/3/trending/movie/week?api_key=API_KEY&lenguage=es');
-        $pf = json_decode($respuesta, false);
+        $generos = getGeneros();
 
-        $pelicul = $pf->results;
+        $url = 'https://api.themoviedb.org/3/trending/movie/week?api_key=API_KEY&lenguage=es';
+        $peliculas = peticion($url);
+        $p = json_decode($peliculas, false);
+
+        $pelicul = $p->results;
         
         $respuesta = array();
-        foreach($pelicul as $pelicula){
+        foreach($pelicul ?? [] as $pelicula){
             $generoAux = getGeneroByIdGenero($pelicula->genre_ids[0]);
             $fecha = date("d-m-Y", strtotime($pelicula->release_date));  
 
@@ -153,7 +145,7 @@
         $pelicul = $pf->results;
         
         $respuesta = array();
-        foreach($pelicul as $pelicula){
+        foreach($pelicul ?? [] as $pelicula){
             $generoAux = getGeneroByIdGenero($pelicula->genre_ids[0]);
             $fecha = date("d-m-Y", strtotime($pelicula->release_date));  
 
@@ -172,7 +164,7 @@
         $pelicul = $pf->results;
         
         $respuesta = array();
-        foreach($pelicul as $pelicula){
+        foreach($pelicul ?? [] as $pelicula){
             $generoAux = getGeneroByIdGenero($pelicula->genre_ids[0]);
             $fecha = date("d-m-Y", strtotime($pelicula->release_date));  
 
@@ -207,6 +199,5 @@
     }
 
    
-
 
 ?>

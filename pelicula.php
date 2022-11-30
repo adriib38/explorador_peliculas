@@ -1,5 +1,5 @@
 <?php
-    include('inc/conexion.inc.php');
+    require_once('inc/conexion.inc.php');
 
     if(!empty($_GET)){
         $peli = getPeliculaById($_GET["id"]);
@@ -34,7 +34,7 @@
         
 </head>
     <body>
-        <?php include('inc/cabecera.inc.php'); ?>
+        <?php require_once('inc/cabecera.inc.php'); ?>
 
         <?php 
             $fecha_ = explode('-', $fecha)[0];

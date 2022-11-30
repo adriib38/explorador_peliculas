@@ -1,4 +1,4 @@
-    <a href="index.php" class="title mrg">REDFLIX</a>
+    <a href="index.php" class="title mrg">Netfilms</a>
     <div class="menu mrg">
         <div class="form-group">
             <form action="results.php" method="get">
